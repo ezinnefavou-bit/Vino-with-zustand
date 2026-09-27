@@ -1,6 +1,22 @@
 import QuoteCard from "./QuoteCard";
+import useQuoteStore from "../store/useQuoteStore";
 
-function QuoteCollection({ quotes, loading, error, onSelectQuote, onRetry }) {
+function QuoteCollection() {
+  const quotes = useQuoteStore((state) => state.quotes);
+  const loading = useQuoteStore((state) => state.collectionLoading);
+  const error = useQuoteStore((state) => state.collectionError);
+  const selectQuote = useQuoteStore((state) => state.selectQuote);
+  const onRetry = useQuoteStore((state) => state.fetchCollection);
+
+  const handleSelectQuote = (selectedQuote) => {
+    selectQuote(selectedQuote);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section id="collection">
       <div className="mb-7 flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
@@ -47,7 +63,7 @@ function QuoteCollection({ quotes, loading, error, onSelectQuote, onRetry }) {
             <QuoteCard
               key={quote.id}
               quote={quote}
-              onClick={() => onSelectQuote(quote)}
+              onClick={() => handleSelectQuote(quote)}
             />
           ))}
         </div>

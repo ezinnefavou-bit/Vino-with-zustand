@@ -1,4 +1,11 @@
-function MainQuote({ quote, loading, error, onNewQuote }) {
+import useQuoteStore from "../store/useQuoteStore";
+
+function MainQuote() {
+  const quote = useQuoteStore((state) => state.quote);
+  const loading = useQuoteStore((state) => state.quoteLoading);
+  const error = useQuoteStore((state) => state.quoteError);
+  const onNewQuote = useQuoteStore((state) => state.fetchRandomQuote);
+
   return (
     <section
       id="about"
